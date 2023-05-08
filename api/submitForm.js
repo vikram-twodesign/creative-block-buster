@@ -3,15 +3,17 @@ const fetch = require("node-fetch");
 module.exports = async (req, res) => {
   try {
     const text = req.query.text;
+    const prompt = req.query.prompt;
 
-    if (!text) {
-      res.status(400).send("Missing 'text' query parameter");
+    if (!text || !prompt) {
+      res.status(400).send("Missing 'text' or 'prompt' query parameter");
       return;
     }
 
     const formId = "1FAIpQLScvPGsfHcU1m4bF8zE7fa2KTElEs1trtC5XVjZIYuZYXkcY3g";
-    const entryId = "504692446";
-    const url = `https://docs.google.com/forms/d/e/${formId}/formResponse?usp=pp_url&entry.${entryId}=${encodeURIComponent(text)}`;
+    const entryIdResponse = "504692446";
+    const entryIdPrompt = "1926837100";
+    const url = `https://docs.google.com/forms/d/e/${formId}/formResponse?usp=pp_url&entry.${entryIdResponse}=${encodeURIComponent(text)}&entry.${entryIdPrompt}=${encodeURIComponent(prompt)}`;
 
     const response = await fetch(url, {
       method: "POST",

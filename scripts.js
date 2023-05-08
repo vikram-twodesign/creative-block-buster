@@ -162,18 +162,24 @@ function init() {
         display.textContent = formattedMinutes + ':' + formattedSeconds;
     }
 
-    function sendDataToGoogleForm(text) {
-  const url = `/api/submitForm?text=${encodeURIComponent(text)}`;
-
-  fetch(url)
-    .then((response) => response.json())
+    function sendDataToGoogleForm(prompt, response) {
+  const url = `/api/submitForm?text=${encodeURIComponent(response)}&prompt=${encodeURIComponent(prompt)}`;
+  
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`${response.status}: ${response.statusText}`);
+      }
+      return response.json();
+    })
     .then((data) => {
-      console.log(data.message);
+      console.log("Data:", data);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
+
 
 
 
