@@ -26,7 +26,8 @@ module.exports = async (req, res) => {
       return;
     }
 
-    res.status(200).send("Submission successful");
+    res.status(200).json({ message: "Submission successful" });
+
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send(`Error: ${error.message}`);
