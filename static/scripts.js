@@ -5,7 +5,6 @@ const userResponseInput = document.querySelector('#user-response-input');
 const successMessageDisplay = document.querySelector('#success-message');
 const timerDisplay = document.querySelector('#timer');
 
-let timerInterval;
 let submittedText = ''; 
 
 const proxyUrl = 'https://block-buster-nu.vercel.app/api/submit-form';
