@@ -128,6 +128,7 @@ function init() {
         userResponseInput.value = '';
         successMessageDisplay.style.display = 'none';
         startTimer(300, timerDisplay);
+        document.getElementById("character-count").innerHTML = "Characters: 0";
     });
 
     submitResponseBtn.addEventListener('click', () => {
