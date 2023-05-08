@@ -182,7 +182,6 @@ function sendDataToGoogleForm(text) {
     method: "POST",
     mode: "no-cors",
 
-  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
   const url = `${proxyUrl}https://docs.google.com/forms/d/e/${formId}/formResponse?usp=pp_url&entry.${entryId}=${encodeURIComponent(text)}`;
 
   fetch(url, {
