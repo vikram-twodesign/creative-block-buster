@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CREATIVE BLOCK BUSTER</title>
+    
+    <link rel="stylesheet" href="https://use.typekit.net/oqm8rib.css">
+    <link rel="stylesheet" href="static/styles.css">
+
+    <style>
+    body {
+        overflow: hidden;
+        position: relative;
+    }
+    
+
+    .blob {
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        background: radial-gradient(circle at 50% 50%, #00b4d8, #caf0f8);
+        border-radius: 50%;
+        animation: blob 40s infinite linear;
+        z-index: -1;
+        filter: blur(100px);
+    }
+
+    @keyframes blob {
+        0% {
+            transform: translateY(0) translateX(0) rotate(0deg);
+        }
+        25% {
+            transform: translateY(-25%) translateX(25%) rotate(90deg);
+        }
+        50% {
+            transform: translateY(0) translateX(50%) rotate(180deg);
+        }
+        75% {
+            transform: translateY(25%) translateX(25%) rotate(270deg);
+        }
+        100% {
+            transform: translateY(0) translateX(0) rotate(360deg);
+        }
+    }
+</style>
+</head>
+<body>
+  <div class="blob"></div>
+  <div class="wrapper">
+
+    <div class="container">
+        <h1>Creative Block Buster</h1>
+        <p class="intro-text">
+            Welcome to the Creative Block Buster, a unique tool designed to spark your creativity and help you bust that creative block. Our AI-powered prompt generator will provide you with unique, thought-provoking prompts to inspire your writing and help you unleash your imagination!
+        </p>
+        <div id="prompt-output" class="prompt-output"></div>
+        <button id="generate-prompt-btn" class="button">Bust My Block</button>
+        <textarea id="user-response-input" rows="4" cols="50" placeholder="Type your response here..."></textarea>
+        <p id="character-count">Characters: 0</p>
+
+        <button id="submit-response-btn" class="button">Submit Your Micro Masterpiece</button>
+        <div id="success-message" class="success-message"></div>
+        <button id="copyToClipboard" class="button" style="display:none;">Copy Your Micro Masterpiece</button>
+        <div id="timer" class="timer"></div>
+
+
+    </div>
+  </div>
+    <script src="static/scripts.js"></script>
+</body>
+</html>
