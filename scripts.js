@@ -5,15 +5,10 @@ const userResponseInput = document.querySelector('#user-response-input');
 const successMessageDisplay = document.querySelector('#success-message');
 const timerDisplay = document.querySelector('#timer');
 
-let timerInterval;
-let submittedText = ''; 
-
-const proxyUrl = "http://localhost:8080/";
-const proxyUrl = 'https://block-buster-nu.vercel.app/api/submit-form';
-
+const proxyUrl = 'https://creative-block-buster.vercel.app/api/submit-form';
 
 let timerInterval;
-let submittedText = ''; // Add this line at the beginning of your scripts.js file
+let submittedText = '';
 
 function generatePrompt() {
     const prompts = [
@@ -128,77 +123,58 @@ function init() {
         return;
     }
 
-    //promptOutput.textContent = generatePrompt();
-
     generatePromptBtn.addEventListener('click', () => {
         promptOutput.textContent = generatePrompt();
         userResponseInput.value = '';
-        successMessageDisplay.style.display = 'none'; // Add this line to hide the success message
+        successMessageDisplay.style.display = 'none';
         startTimer(300, timerDisplay);
     });
 
     submitResponseBtn.addEventListener('click', () => {
-  successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
-  successMessageDisplay.style.display = 'block'; // Add this line to show the success message
-  clearInterval(timerInterval);
+        successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
+        successMessageDisplay.style.display = 'block';
+        clearInterval(timerInterval);
 
-  // Display the "Copy to Clipboard" button
-  document.getElementById('copyToClipboard').style.display = 'block';
+        document.getElementById('copyToClipboard').style.display = 'block';
+        submittedText = userResponseInput.value;
+        sendDataToGoogleForm(userResponseInput.value);
+    });
 
-  // Save the submitted text
-  submittedText = userResponseInput.value;
-
-  sendDataToGoogleForm(userResponseInput.value);
-});
-
-
-function startTimer(duration, display) {
-    clearInterval(timerInterval);
-    let timeRemaining = duration;
-    tick(display, timeRemaining);
-    timerInterval = setInterval(() => {
-        timeRemaining -= 1;
+    function startTimer(duration, display) {
+        clearInterval(timerInterval);
+        let timeRemaining = duration;
         tick(display, timeRemaining);
-        if (timeRemaining <= 0) {
-            clearInterval(timerInterval);
-            display.textContent = "Your time's up!";
-        }
-    }, 1000);
-}
+        timerInterval = setInterval(() => {
+            timeRemaining -= 1;
+            tick(display, timeRemaining);
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                display.textContent = "Your time's up!";
+            }
+        }, 1000);
+    }
 
-function tick(display, timeRemaining) {
-    const minutes = parseInt(timeRemaining / 60, 10);
-    const seconds = parseInt(timeRemaining % 60, 10);
-    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-    const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
-    display.textContent = formattedMinutes + ':' + formattedSeconds;
-}
+    function tick(display, timeRemaining) {
+        const minutes = parseInt(timeRemaining / 60, 10);
+        const seconds = parseInt(timeRemaining % 60, 10);
+        const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+        const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+        display.textContent = formattedMinutes + ':' + formattedSeconds;
+    }
 
+    function sendDataToGoogleForm(text) {
+  const url = `/api/submitForm?text=${encodeURIComponent(text)}`;
 
-
-function sendDataToGoogleForm(text) {
-  const formId = "1FAIpQLScvPGsfHcU1m4bF8zE7fa2KTElEs1trtC5XVjZIYuZYXkcY3g";
-  const entryId = "504692446";
-  const url = `https://docs.google.com/forms/d/e/${formId}/formResponse?usp=pp_url&entry.${entryId}=${encodeURIComponent(text)}`;
-
-  fetch(url, {
-    method: "POST",
-    mode: "no-cors",
-
-  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-  const url = `${proxyUrl}https://docs.google.com/forms/d/e/${formId}/formResponse?usp=pp_url&entry.${entryId}=${encodeURIComponent(text)}`;
-
-  fetch(url, {
-    method: "POST",
-    mode: "cors",
-  })
-    .then(() => {
-      console.log("Submission successful");
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.message);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
+
 
 
 
