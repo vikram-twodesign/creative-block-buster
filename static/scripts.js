@@ -163,21 +163,18 @@ function init() {
     }
 
     function sendDataToGoogleForm(text) {
-        const formId = "1FAIpQLScvPGsfHcU1m4bF8zE7fa2KTElEs1trtC5XVjZIYuZYXkcY3g";
-        const entryId = "504692446";
-        const url = `https://docs.google.com/forms/d/e/${formId}/formResponse?usp=pp_url&entry.${entryId}=${encodeURIComponent(text)}`;
+  const url = `/api/submitForm?text=${encodeURIComponent(text)}`;
 
-        fetch(url, {
-            method: "POST",
-            mode: "cors",
-        })
-            .then(() => {
-                console.log("Submission successful");
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    }
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.message);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
 
 
 
