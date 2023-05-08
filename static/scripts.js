@@ -8,7 +8,6 @@ const timerDisplay = document.querySelector('#timer');
 let timerInterval;
 let submittedText = ''; 
 
-const proxyUrl = "http://localhost:8080/";
 const proxyUrl = 'https://block-buster-nu.vercel.app/api/submit-form';
 
 
