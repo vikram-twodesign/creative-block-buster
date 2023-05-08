@@ -131,14 +131,20 @@ function init() {
     });
 
     submitResponseBtn.addEventListener('click', () => {
-        successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
-        successMessageDisplay.style.display = 'block';
-        clearInterval(timerInterval);
+    successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
+    successMessageDisplay.style.display = 'block';
+    clearInterval(timerInterval);
 
-        document.getElementById('copyToClipboard').style.display = 'block';
-        submittedText = userResponseInput.value;
-        sendDataToGoogleForm(userResponseInput.value);
-    });
+    document.getElementById('copyToClipboard').style.display = 'block';
+    submittedText = userResponseInput.value;
+
+    // Get the current prompt displayed
+    const currentPrompt = promptOutput.textContent;
+    
+    // Pass the current prompt along with the user's response to sendDataToGoogleForm
+    sendDataToGoogleForm(currentPrompt, userResponseInput.value);
+});
+
 
     function startTimer(duration, display) {
         clearInterval(timerInterval);
