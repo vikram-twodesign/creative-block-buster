@@ -1,9 +1,9 @@
 body {
     font-family: 'Courier New', monospace;
-    background-color: #333;
+    background-color: #999999;
     color: #0f0;
     line-height: 1.6;
-    text-shadow: 0px 0px 2px #0f0;
+    text-shadow: 0px 0px 4px #0f0;
 }
 
 .wrapper {
@@ -41,7 +41,7 @@ h1 {
     align-items: center;
     justify-content: center;
     border-radius: 16px;
-    box-shadow: 0px 0px 2px #0f0;
+    box-shadow: 0px 0px 4px #0f0;
     min-height: 80px;
 }
 
@@ -56,8 +56,9 @@ h1 {
     margin-bottom: 60px;
     margin-top: 10px;
     font-size: 16px;
+    font-weight: 800;
     border-radius: 8px;
-    box-shadow: 0px 0px 2px #0f0;
+    box-shadow: 0px 0px 4px #0f0;
 }
 
 .button:hover {
@@ -71,7 +72,7 @@ textarea {
     color: #0f0;
     border-radius: 16px;
     font-family: 'Courier New', monospace;
-    font-weight: bold;
+    font-weight: 800;
     font-size: 16px;
     margin: 10px 0;
     resize: none;
@@ -130,3 +131,9 @@ textarea::placeholder {
 #copyToClipboard:hover {
     background-color: #00b400;
 }
+
+.prompt-output, .button, input[type="text"], #user-response-input {
+    border: 1px dashed #0f0; /* This gives a pixel-like border */
+    /* Other styles remain the same */
+}
+
