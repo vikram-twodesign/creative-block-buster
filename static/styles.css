@@ -16,7 +16,7 @@ body {
 
 .intro-text {
     font-size: 1rem;
-    text-align: center;
+    text-align: left;
     padding: 10px 60px;
     margin-bottom: 2rem;
 }
