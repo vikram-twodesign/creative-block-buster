@@ -12,7 +12,6 @@ let submittedText = '';
 
 function generatePrompt() {
     const prompts = [
-
         "Write a short story about a world where everyone can control one of the four elements: water, earth, air, or fire.",
         "Compose a poem about the moon and its influence on human emotions.",
         "Create a narrative about a character who discovers they have the power to travel through time.",
@@ -110,7 +109,6 @@ function generatePrompt() {
         "Write a short story about a character who encounters their doppelganger.",
         "Create a narrative about a character who is transported to a world where their favorite book comes to life.",
         "Write a flash fiction piece about a character who discovers a secret about their own identity."
-
     ];
 
     const randomIndex = Math.floor(Math.random() * prompts.length);
@@ -124,28 +122,38 @@ function init() {
     }
 
     generatePromptBtn.addEventListener('click', () => {
-        promptOutput.textContent = generatePrompt();
+        const promptText = generatePrompt();
+        promptOutput.textContent = '';
         userResponseInput.value = '';
         successMessageDisplay.style.display = 'none';
         startTimer(300, timerDisplay);
         document.getElementById("character-count").innerHTML = "Characters: 0";
+
+        // Animation for prompt text
+        let i = 0;
+        const speed = 50;
+        function typeWriter() {
+            if (i < promptText.length) {
+                promptOutput.textContent += promptText.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+        typeWriter();
     });
 
     submitResponseBtn.addEventListener('click', () => {
-    successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
-    successMessageDisplay.style.display = 'block';
-    clearInterval(timerInterval);
+        successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
+        successMessageDisplay.style.display = 'block';
+        clearInterval(timerInterval);
 
-    document.getElementById('copyToClipboard').style.display = 'block';
-    submittedText = userResponseInput.value;
+        document.getElementById('copyToClipboard').style.display = 'block';
+        submittedText = userResponseInput.value;
 
-    // Get the current prompt displayed
-    const currentPrompt = promptOutput.textContent;
-    
-    // Pass the current prompt along with the user's response to sendDataToGoogleForm
-    sendDataToGoogleForm(currentPrompt, userResponseInput.value);
-});
+        const currentPrompt = promptOutput.textContent;
 
+        sendDataToGoogleForm(currentPrompt, userResponseInput.value);
+    });
 
     function startTimer(duration, display) {
         clearInterval(timerInterval);
@@ -170,36 +178,44 @@ function init() {
     }
 
     function sendDataToGoogleForm(prompt, response) {
-  const url = `/api/submitForm?text=${encodeURIComponent(response)}&prompt=${encodeURIComponent(prompt)}`;
+        const url = `/api/submitForm?text=${encodeURIComponent(response)}&prompt=${encodeURIComponent(prompt)}`;
   
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`${response.status}: ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Data:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
+        return fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log("Data:", data);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    }
+
+    document.getElementById("user-response-input").addEventListener("input", function () {
+        const inputText = this.value;
+        const characterCount = inputText.length;
+        document.getElementById("character-count").innerHTML = "Characters: " + characterCount;
     });
-}
-
-
-
-
-
-document.getElementById("user-response-input").addEventListener("input", function () {
-  const inputText = this.value;
-  const characterCount = inputText.length;
-  document.getElementById("character-count").innerHTML = "Characters: " + characterCount;
-});
 
 }
 
 init();
+
+// Blinking cursor
+let cursor = true;
+setInterval(() => {
+    if(cursor) {
+        document.getElementById('user-response-input').style.borderRightColor = '#0f0';
+        cursor = false;
+    } else {
+        document.getElementById('user-response-input').style.borderRightColor = 'transparent';
+        cursor = true;
+    }
+}, 500);
 
 document.getElementById('copyToClipboard').addEventListener('click', () => {
     navigator.clipboard.writeText(submittedText).then(() => {
