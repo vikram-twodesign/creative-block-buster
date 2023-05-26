@@ -99,8 +99,10 @@ textarea {
 }
 
 #custom-cursor {
-    color: #0f0;
-    animation: blink 1s steps(1) infinite;
+  position: absolute;
+  color: #0f0;
+  animation: blink 1s steps(1) infinite;
+  left: 0; /* you might need to adjust this value */
 }
 
 @keyframes blink {
