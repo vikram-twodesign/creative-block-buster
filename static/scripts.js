@@ -224,3 +224,21 @@ document.getElementById('copyToClipboard').addEventListener('click', () => {
         console.error('Error copying text:', error);
     });
 });
+
+
+function updateDateTime() {
+  const dateTimeElement = document.querySelector('#date-time');
+  const now = new Date();
+  const dateTimeString = now.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  });
+  dateTimeElement.textContent = dateTimeString;
+}
+
+setInterval(updateDateTime, 1000);
+
