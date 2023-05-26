@@ -80,7 +80,6 @@ textarea {
     resize: none;
     overflow-wrap: break-word;
     white-space: pre-wrap;
-    box-sizing: border-box;
 }
 
 #user-response-input {
