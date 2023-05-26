@@ -1,5 +1,7 @@
 body {
-    font-family: 'Courier New', monospace;
+    font-family: "calling-code", sans-serif;
+    font-weight: 700;
+    font-style: normal;
     background-color: #000000;
     color: #0f0;
     line-height: 1.6;
@@ -71,8 +73,9 @@ textarea {
     background-color: #222;
     color: #0f0;
     border-radius: 16px;
-    font-family: 'Courier New', monospace;
-    font-weight: 800;
+    font-family: "calling-code", monospace;
+    font-weight: 700;
+    font-style: normal;
     font-size: 16px;
     margin: 10px 0;
     resize: none;
@@ -95,7 +98,6 @@ textarea {
     padding-bottom: 20px;
     box-shadow: 0px 0px 2px #0f0;
     caret-color: transparent; /* Hide default cursor */
-    border-right: 2px solid #0f0; /* Cursor color */
 }
 
 #custom-cursor {
@@ -121,7 +123,7 @@ textarea::placeholder {
 
 .timer {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 #copyToClipboard {
