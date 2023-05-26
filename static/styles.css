@@ -102,7 +102,7 @@ textarea {
   position: absolute;
   color: #0f0;
   animation: blink 1s steps(1) infinite;
-  left: 200; /* you might need to adjust this value */
+  left: 100; /* you might need to adjust this value */
 }
 
 @keyframes blink {
