@@ -71,6 +71,7 @@ textarea {
     color: #0f0;
     border-radius: 16px;
     font-family: 'Courier New', monospace;
+    font-weight: bold;
     font-size: 16px;
     margin: 10px 0;
     resize: none;
