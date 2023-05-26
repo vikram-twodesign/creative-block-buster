@@ -3,7 +3,7 @@ body {
     background-color: #333;
     color: #0f0;
     line-height: 1.6;
-    text-shadow: 0px 0px 10px #0f0;
+    text-shadow: 0px 0px 5px #0f0;
 }
 
 .wrapper {
@@ -41,7 +41,7 @@ h1 {
     align-items: center;
     justify-content: center;
     border-radius: 16px;
-    box-shadow: 0px 0px 10px #0f0;
+    box-shadow: 0px 0px 5px #0f0;
     min-height: 80px;
 }
 
@@ -57,7 +57,7 @@ h1 {
     margin-top: 10px;
     font-size: 16px;
     border-radius: 8px;
-    box-shadow: 0px 0px 10px #0f0;
+    box-shadow: 0px 0px 5px #0f0;
 }
 
 .button:hover {
@@ -91,7 +91,7 @@ textarea {
     padding-right: 10px;
     padding-top: 10px;
     padding-bottom: 20px;
-    box-shadow: 0px 0px 10px #0f0;
+    box-shadow: 0px 0px 5px #0f0;
 }
 
 textarea::placeholder {
@@ -121,7 +121,7 @@ textarea::placeholder {
     cursor: pointer;
     transition-duration: 0.4s;
     border-radius: 12px;
-    box-shadow: 0px 0px 10px #0f0;
+    box-shadow: 0px 0px 5px #0f0;
 }
 
 #copyToClipboard:hover {
