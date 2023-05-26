@@ -93,6 +93,7 @@ textarea {
     padding-top: 10px;
     padding-bottom: 20px;
     box-shadow: 0px 0px 2px #0f0;
+    border-right: 2px solid #0f0; /* Cursor color */
 }
 
 textarea::placeholder {
@@ -124,6 +125,7 @@ textarea::placeholder {
     border-radius: 12px;
     box-shadow: 0px 0px 2px #0f0;
 }
+
 
 #copyToClipboard:hover {
     background-color: #00b400;
