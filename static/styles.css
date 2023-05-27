@@ -17,8 +17,8 @@ body {
 
 #footer {
     color: #0f0;
-    position: middle;
-    bottom: 20px;
+    position: absolute;
+    bottom: 10px;
     font-size: 0.8rem;
 }
 
