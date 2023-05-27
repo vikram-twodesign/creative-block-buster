@@ -169,8 +169,5 @@ textarea::placeholder {
     background-color: #00b400;
 }
 
-.prompt-output, .button, input[type="text"], #user-response-input {
-    border: 1px dashed #0f0; /* This gives a pixel-like border */
-    /* Other styles remain the same */
-}
+
 
