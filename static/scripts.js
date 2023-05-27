@@ -169,12 +169,12 @@ function init() {
         successMessageDisplay.style.display = 'block';
         clearInterval(timerInterval);
 
-        document.getElementById('copyToClipboard').style.display = 'block'; 
         submittedText = userResponseInput.value;
-
         const currentPrompt = promptOutput.textContent;
 
         sendDataToGoogleForm(currentPrompt, userResponseInput.value);
+        
+        document.getElementById('copyToClipboard').classList.remove('hide-initially');
     });
 
     function startTimer(duration, display) {
