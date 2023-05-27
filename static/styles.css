@@ -50,16 +50,12 @@ footer {
 h1 {
     text-align: center;
     margin-bottom: 40px;
-    animation: flicker 1s infinite;
+    animation: flicker 2s infinite;
 }
 
 @keyframes flicker {
   0%, 100% { opacity: 1; }
-  50% { opacity: .2; }
-}
-
-#title {
-    animation: flicker 2s infinite;
+  50% { opacity: .4; }
 }
 
 
