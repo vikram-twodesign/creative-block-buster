@@ -125,6 +125,13 @@ textarea::placeholder {
     font-weight: 700;
 }
 
+#timer-progress-bar {
+    height: 20px;
+    background-color: #44FF44; /* Green color */
+    width: 100%;
+}
+
+
 #copyToClipboard {
     display: block;
     background-color: #0f0;
