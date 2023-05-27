@@ -110,17 +110,6 @@ textarea {
     position: relative;
 }
 
-#custom-cursor {
-  position: absolute;
-  color: #0f0;
-  animation: blink 1s steps(1) infinite;
-  left: 50; /* you might need to adjust this value */
-}
-
-@keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-}
 
 textarea::placeholder {
     color: #0f0;
