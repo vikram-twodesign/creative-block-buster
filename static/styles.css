@@ -7,6 +7,11 @@ body {
     text-shadow: 0px 0px 2px #0f0;
 }
 
+.hide-initially {
+    display: none;
+}
+
+
 #date-time {
   color: #0f0;
   position: absolute;
