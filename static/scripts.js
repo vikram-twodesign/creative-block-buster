@@ -10,6 +10,21 @@ const proxyUrl = 'https://creative-block-buster.vercel.app/api/submit-form';
 let timerInterval;
 let submittedText = '';
 
+const introText = document.querySelector('#intro-text');
+let index = 0;
+const text = "Hello, Wordsmith! Feeling stuck? You've come to the right place. Welcome to the Creative Block Buster – your new secret weapon against writer's block. We'll toss you a fresh, exciting prompt and all you have to do is catch it and run. But here's the catch: you've got just 5 minutes to conquer the prompt and emerge victorious. Don't worry, once you've created your micro-masterpiece, you can easily copy it and share with your friends. Who knew breaking down walls could be this much fun? Get started now and watch your creative block crumble!"; // Enter the new shorter intro text here
+
+function typeWriter() {
+    if (index < text.length) {
+        introText.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeWriter, 50); // Speed of typing, adjust as needed
+    }
+}
+
+window.addEventListener('load', typeWriter);
+
+
 function generatePrompt() {
     const prompts = [
         "Write a short story about a world where everyone can control one of the four elements: water, earth, air, or fire.",
@@ -210,17 +225,6 @@ function init() {
 
 init();
 
-// Blinking cursor
-let cursor = true;
-setInterval(() => {
-    if(cursor) {
-        document.getElementById('user-response-input').style.borderRightColor = '#0f0';
-        cursor = false;
-    } else {
-        document.getElementById('user-response-input').style.borderRightColor = 'transparent';
-        cursor = true;
-    }
-}, 500);
 
 document.getElementById('copyToClipboard').addEventListener('click', () => {
     navigator.clipboard.writeText(submittedText).then(() => {
