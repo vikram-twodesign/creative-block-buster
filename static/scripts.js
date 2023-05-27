@@ -169,7 +169,7 @@ function init() {
         successMessageDisplay.style.display = 'block';
         clearInterval(timerInterval);
 
-        document.getElementById('copyToClipboard').classList.remove('hide-initially'); 
+        document.getElementById('copyToClipboard').style.display = 'block'; 
         submittedText = userResponseInput.value;
 
         const currentPrompt = promptOutput.textContent;
