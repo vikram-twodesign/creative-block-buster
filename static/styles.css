@@ -155,7 +155,7 @@ textarea::placeholder {
 
 
 #copyToClipboard {
-    display: block;
+    display: none;
     background-color: #0f0;
     border: none;
     color: #333;
