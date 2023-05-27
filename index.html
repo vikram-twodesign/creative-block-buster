@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://use.typekit.net/oqm8rib.css">
     <link rel="stylesheet" href="static/styles.css">
 
-    
 </head>
 <body>
     <div id="date-time"></div>
@@ -16,21 +15,19 @@
     <div class="container">
         <h1>Creative Block Buster</h1>
         <p id="intro-text"></p>
-        <div id="prompt-output" class="prompt-output"></div>
-        <button id="generate-prompt-btn" class="button">Generate Prompt</button>
-            <textarea id="user-response-input" rows="4" cols="50" placeholder="Enter your response here..."></textarea>
-        <p id="character-count">Characters: 0</p>
-        <button id="submit-response-btn" class="button">Submit Response</button>
+        <div id="prompt-output" class="prompt-output hide-initially"></div>
+        <button id="generate-prompt-btn" class="button hide-initially">Generate Prompt</button>
+            <textarea id="user-response-input" rows="4" cols="50" class="hide-initially" placeholder="Enter your response here..."></textarea>
+        <p id="character-count" class="hide-initially">Characters: 0</p>
+        <button id="submit-response-btn" class="button hide-initially">Submit Response</button>
         <div id="success-message" class="success-message"></div>
-        <button id="copyToClipboard" class="button" style="display:none;">Copy Your Micro Masterpiece</button>
-        <div id="timer-progress-bar"></div>
-        <div id="timer" class="timer"></div>
+        <button id="copyToClipboard" class="button hide-initially" style="display:none;">Copy Your Micro Masterpiece</button>
+        <div id="timer-progress-bar" class="hide-initially"></div>
+        <div id="timer" class="timer hide-initially"></div>
     </div>
   </div>
     <script src="static/scripts.js"></script>
 </body>
     
     <footer>Made with <3 for Karanjeet</footer>
-
-    
 </html>
