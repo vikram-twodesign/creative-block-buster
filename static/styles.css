@@ -15,7 +15,7 @@ body {
   font-size: 0.8rem;
 }
 
-#footer {
+footer {
     color: #0f0;
     position: fixed;
     bottom: 10px;
