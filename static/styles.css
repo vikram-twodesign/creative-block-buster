@@ -7,7 +7,7 @@ body {
     text-shadow: 0px 0px 2px #0f0;
 }
 
-.hide-initially {
+body .hide-initially {
     display: none;
 }
 
