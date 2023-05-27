@@ -165,17 +165,18 @@ function init() {
     });
 
     submitResponseBtn.addEventListener('click', () => {
-        successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
-        successMessageDisplay.style.display = 'block';
-        clearInterval(timerInterval);
+    successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
+    successMessageDisplay.style.display = 'block';
+    clearInterval(timerInterval);
 
-        submittedText = userResponseInput.value;
-        const currentPrompt = promptOutput.textContent;
+    submittedText = userResponseInput.value;
+    const currentPrompt = promptOutput.textContent;
+    sendDataToGoogleForm(currentPrompt, userResponseInput.value);
 
-        sendDataToGoogleForm(currentPrompt, userResponseInput.value);
-        
-        document.getElementById('copyToClipboard').classList.remove('hide-initially');
-    });
+    // Here, we are removing the 'hide-initially' class to make the button visible
+    document.getElementById('copyToClipboard').classList.remove('hide-initially');
+});
+
 
     function startTimer(duration, display) {
         clearInterval(timerInterval);
