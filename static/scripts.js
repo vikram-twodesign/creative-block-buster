@@ -175,6 +175,11 @@ function init() {
         const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
         const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
         display.textContent = formattedMinutes + ':' + formattedSeconds;
+        
+    // Update the progress bar
+        const progressBar = document.getElementById('timer-progress-bar');
+        const progressPercentage = (timeRemaining / 300) * 100; // Adjust 300 to your timer's duration
+        progressBar.style.width = progressPercentage + '%';
     }
 
     function sendDataToGoogleForm(prompt, response) {
