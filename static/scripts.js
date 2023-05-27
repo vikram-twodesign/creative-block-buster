@@ -18,9 +18,16 @@ function typeWriter() {
     if (index < text.length) {
         introText.innerHTML += text.charAt(index);
         index++;
-        setTimeout(typeWriter, 50); // Speed of typing, adjust as needed
+        setTimeout(typeWriter, 50); 
+    } else {
+        // When the intro text is finished, reveal the other elements
+        const hiddenElements = document.querySelectorAll('.hide-initially');
+        hiddenElements.forEach(element => {
+            element.classList.remove('hide-initially');
+        });
     }
 }
+
 
 window.addEventListener('load', typeWriter);
 
