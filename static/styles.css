@@ -52,6 +52,16 @@ h1 {
     margin-bottom: 40px;
 }
 
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+
+#title {
+    animation: flicker 2s infinite;
+}
+
+
 .prompt-output {
     background-color: #0f0;
     color: #333;
@@ -117,7 +127,6 @@ textarea {
     padding-top: 10px;
     padding-bottom: 20px;
     box-shadow: 0px 0px 2px #0f0;
-    position: relative;
 }
 
 
