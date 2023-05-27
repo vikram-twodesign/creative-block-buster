@@ -50,6 +50,7 @@ footer {
 h1 {
     text-align: center;
     margin-bottom: 40px;
+    animation: flicker 2s infinite;
 }
 
 @keyframes flicker {
