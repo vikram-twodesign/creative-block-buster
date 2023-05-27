@@ -17,10 +17,14 @@ body {
 
 #footer {
     color: #0f0;
-    position: absolute;
+    position: fixed;
     bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
     font-size: 0.8rem;
 }
+
 
 .wrapper {
     min-height: 100vh;
