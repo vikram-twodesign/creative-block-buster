@@ -29,7 +29,7 @@ function typeWriter() {
 }
 
 
-window.addEventListener('load', typeWriter);
+window.addEventListener('DOMContentLoaded', typeWriter);
 
 
 function generatePrompt() {
