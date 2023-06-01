@@ -27,7 +27,7 @@ function typeWriter() {
     if (lineIndex < textLines.length) {
         introText.innerHTML += "<p>" + textLines[lineIndex] + "</p>";
         lineIndex++;
-        setTimeout(typeWriter, 1000); // Add a delay of 1 second between each line
+        setTimeout(typeWriter, 2000); // Add a delay of 2 seconds between each line
     } else {
         // When the intro text is finished, reveal the other elements
         const hiddenElements = document.querySelectorAll('.hide-initially');
