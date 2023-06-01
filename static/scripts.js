@@ -17,8 +17,7 @@ const textLines = [
   "Welcome to the Creative Block Buster – your new secret weapon against writer's block.",
   "We'll toss you a fresh, exciting prompt and all you have to do is catch it and run.",
   "But here's the catch: you've got just 5 minutes to conquer the prompt and emerge victorious.",
-  "Who knew breaking down walls could be this much fun?",
-  "Get started now and watch your creative block crumble!"
+  "Click the button below, and watch your creative block crumble!"
 ];
 
 let lineIndex = 0;
@@ -27,7 +26,7 @@ function typeWriter() {
     if (lineIndex < textLines.length) {
         introText.innerHTML += "<p>" + textLines[lineIndex] + "</p>";
         lineIndex++;
-        setTimeout(typeWriter, 2000); // Add a delay of 2 seconds between each line
+        setTimeout(typeWriter, 2500); // Add a delay of 2.5 seconds between each line
     } else {
         // When the intro text is finished, reveal the other elements
         const hiddenElements = document.querySelectorAll('.hide-initially');
