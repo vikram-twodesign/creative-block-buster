@@ -10,15 +10,23 @@ const proxyUrl = 'https://creative-block-buster.vercel.app/api/submit-form';
 let timerInterval;
 let submittedText = '';
 
-const introText = document.querySelector('#intro-text');
-let index = 0;
-const text = "Hello, Wordsmith! Feeling stuck? You've come to the right place. Welcome to the Creative Block Buster – your new secret weapon against writer's block. We'll toss you a fresh, exciting prompt and all you have to do is catch it and run. But here's the catch: you've got just 5 minutes to conquer the prompt and emerge victorious. Don't worry, once you've created your micro-masterpiece, you can easily copy it and share with your friends. Who knew breaking down walls could be this much fun? Get started now and watch your creative block crumble!"; // Enter the new shorter intro text here
+const introText = document.querySelector('.intro-text');
+const text = "Hello, Wordsmith! Feeling stuck? You've come to the right place. Welcome to the Creative Block Buster – your new secret weapon against writer's block. We'll toss you a fresh, exciting prompt and all you have to do is catch it and run. But here's the catch: you've got just 5 minutes to conquer the prompt and emerge victorious. Don't worry, once you've created your micro-masterpiece, you can easily copy it and share with your friends. Who knew breaking down walls could be this much fun? Get started now and watch your creative block crumble!".split("\n"); // Enter the new shorter intro text here
+let lineIndex = 0;
+let charIndex = 0;
 
 function typeWriter() {
-    if (index < text.length) {
-        introText.innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeWriter, 50); 
+    if (lineIndex < text.length) {
+        if (charIndex < text[lineIndex].length) {
+            introText.innerHTML += text[lineIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, 50);
+        } else {
+            introText.innerHTML += "<br>";
+            lineIndex++;
+            charIndex = 0;
+            setTimeout(typeWriter, 1000); // Delay between lines
+        }
     } else {
         // When the intro text is finished, reveal the other elements
         const hiddenElements = document.querySelectorAll('.hide-initially');
@@ -27,7 +35,6 @@ function typeWriter() {
         });
     }
 }
-
 
 window.addEventListener('DOMContentLoaded', typeWriter);
 
