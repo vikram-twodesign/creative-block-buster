@@ -46,10 +46,6 @@ footer {
     margin-bottom: 2rem;
 }
 
-#intro-text br {
-    display: inline;
-}
-
 
 .container {
     max-width: 700px;
