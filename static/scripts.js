@@ -26,10 +26,7 @@ let lineIndex = 0;
 
 function typeWriter() {
     if (lineIndex < textLines.length) {
-        const newLine = document.createElement("p");
-        newLine.classList.add("intro-text");
-        newLine.textContent = textLines[lineIndex];
-        introTextContainer.appendChild(newLine);
+        introText.innerHTML += "<p>" + textLines[lineIndex] + "</p>";
         lineIndex++;
         setTimeout(typeWriter, 1000); // Add a delay of 1 second between each line
     } else {
@@ -40,6 +37,7 @@ function typeWriter() {
         });
     }
 }
+
 
 window.addEventListener('DOMContentLoaded', typeWriter);
 
