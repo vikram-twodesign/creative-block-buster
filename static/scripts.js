@@ -37,6 +37,8 @@ function typeWriter() {
 }
 
 window.addEventListener('DOMContentLoaded', typeWriter);
+// Rest of the script
+
 
 
 function generatePrompt() {
