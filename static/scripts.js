@@ -11,22 +11,24 @@ let timerInterval;
 let submittedText = '';
 
 const introText = document.querySelector('.intro-text');
-const text = "Hello, Wordsmith! Feeling stuck? You've come to the right place. Welcome to the Creative Block Buster – your new secret weapon against writer's block. We'll toss you a fresh, exciting prompt and all you have to do is catch it and run. But here's the catch: you've got just 5 minutes to conquer the prompt and emerge victorious. Don't worry, once you've created your micro-masterpiece, you can easily copy it and share with your friends. Who knew breaking down walls could be this much fun? Get started now and watch your creative block crumble!".split("\n");
+const textLines = [
+  "Hello, Wordsmith!",
+  "Feeling stuck? You've come to the right place.",
+  "Welcome to the Creative Block Buster – your new secret weapon against writer's block.",
+  "We'll toss you a fresh, exciting prompt and all you have to do is catch it and run.",
+  "But here's the catch: you've got just 5 minutes to conquer the prompt and emerge victorious.",
+  "Don't worry, once you've created your micro-masterpiece, you can easily copy it and share with your friends.",
+  "Who knew breaking down walls could be this much fun?",
+  "Get started now and watch your creative block crumble!"
+];
+
 let lineIndex = 0;
-let charIndex = 0;
 
 function typeWriter() {
     if (lineIndex < text.length) {
-        if (charIndex < text[lineIndex].length) {
-            introText.innerHTML += text[lineIndex].charAt(charIndex);
-            charIndex++;
-            setTimeout(typeWriter, 50);
-        } else {
-            introText.innerHTML += "<br>";
-            lineIndex++;
-            charIndex = 0;
-            setTimeout(typeWriter, 1000); // Delay between lines
-        }
+        introText.innerHTML += text[lineIndex] + "<br>";
+        lineIndex++;
+        setTimeout(typeWriter, 1000); // Add a delay of 1 second between each line
     } else {
         // When the intro text is finished, reveal the other elements
         const hiddenElements = document.querySelectorAll('.hide-initially');
@@ -38,6 +40,7 @@ function typeWriter() {
 
 window.addEventListener('DOMContentLoaded', typeWriter);
 // Rest of the script
+
 
 
 
