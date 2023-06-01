@@ -1,3 +1,4 @@
+const introText = document.querySelector('#intro-text');
 const promptOutput = document.querySelector('#prompt-output');
 const generatePromptBtn = document.querySelector('#generate-prompt-btn');
 const submitResponseBtn = document.querySelector('#submit-response-btn');
@@ -9,8 +10,6 @@ const proxyUrl = 'https://creative-block-buster.vercel.app/api/submit-form';
 
 let timerInterval;
 let submittedText = '';
-
-const introTextContainer = document.querySelector('#intro-text');
 
 const textLines = [
   "Hello, Wordsmith!",
