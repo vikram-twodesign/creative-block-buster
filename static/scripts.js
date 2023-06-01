@@ -10,14 +10,14 @@ const proxyUrl = 'https://creative-block-buster.vercel.app/api/submit-form';
 let timerInterval;
 let submittedText = '';
 
-const introText = document.querySelector('.intro-text');
+const introTextContainer = document.querySelector('#intro-text');
+
 const textLines = [
   "Hello, Wordsmith!",
   "Feeling stuck? You've come to the right place.",
   "Welcome to the Creative Block Buster – your new secret weapon against writer's block.",
   "We'll toss you a fresh, exciting prompt and all you have to do is catch it and run.",
   "But here's the catch: you've got just 5 minutes to conquer the prompt and emerge victorious.",
-  "Don't worry, once you've created your micro-masterpiece, you can easily copy it and share with your friends.",
   "Who knew breaking down walls could be this much fun?",
   "Get started now and watch your creative block crumble!"
 ];
@@ -25,8 +25,11 @@ const textLines = [
 let lineIndex = 0;
 
 function typeWriter() {
-    if (lineIndex < text.length) {
-        introText.innerHTML += text[lineIndex] + "<br>";
+    if (lineIndex < textLines.length) {
+        const newLine = document.createElement("p");
+        newLine.classList.add("intro-text");
+        newLine.textContent = textLines[lineIndex];
+        introTextContainer.appendChild(newLine);
         lineIndex++;
         setTimeout(typeWriter, 1000); // Add a delay of 1 second between each line
     } else {
@@ -39,9 +42,8 @@ function typeWriter() {
 }
 
 window.addEventListener('DOMContentLoaded', typeWriter);
+
 // Rest of the script
-
-
 
 
 function generatePrompt() {
