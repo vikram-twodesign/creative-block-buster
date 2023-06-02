@@ -42,6 +42,7 @@ footer {
 .intro-container {
     width: 80%; /* or any value that you prefer */
     margin: 0 auto; /* centers the container */
+    align-items: center;
 }
 
 
