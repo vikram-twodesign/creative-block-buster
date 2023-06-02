@@ -40,8 +40,8 @@ footer {
 }
 
 .intro-container {
-    width: 80%; /* or any value that you prefer */
-    margin: 20 auto; /* centers the container */
+    width: 70%; /* or any value that you prefer */
+    margin: 0 auto; /* centers the container */
     align-items: center;
 }
 
@@ -49,8 +49,8 @@ footer {
 .intro-text {
     font-size: 1rem;
     text-align: left !important;
-    padding: 50px 60px;
-    margin-bottom: 2rem;
+    padding: 20px 60px;
+    margin-bottom: 4rem;
     margin: 0.2rem 0;  /* Adjust this value to your liking */
 }
 
