@@ -108,7 +108,7 @@ h1 {
 }
 
 .button:hover {
-    background-color: #f2f2f2;
+    background-color: #666666;
 }
 
 textarea {
@@ -145,7 +145,7 @@ textarea {
 
 
 textarea::placeholder {
-    color: #f1f1f1;
+    color: #666666;
     opacity: 1;
 }
 
@@ -160,7 +160,7 @@ textarea::placeholder {
 
 #timer-progress-bar {
     height: 20px;
-    background-color: #999999; /* Green color */
+    background-color: #999999; 
     width: 100%;
 }
 
