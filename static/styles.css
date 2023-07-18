@@ -36,8 +36,15 @@ footer {
         justify-content: space-between;
         gap: 20px; /* adjust this to change the space between the columns */
     }
-}
 
+    .left-column {
+        flex: 0 0 30%; /* this makes the left column take up 30% of the width */
+    }
+
+    .right-column {
+        flex: 0 0 70%; /* this makes the right column take up 70% of the width */
+    }
+}
 
 .intro-container {
     width: 70%; /* or any value that you prefer */
@@ -62,7 +69,7 @@ footer {
 
 h1 {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 50px;
 }
 
 
