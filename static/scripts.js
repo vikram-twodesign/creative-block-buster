@@ -32,11 +32,6 @@ function showIntroText() {
 
 window.addEventListener('DOMContentLoaded', showIntroText);
 
-}
-
-
-window.addEventListener('DOMContentLoaded', typeWriter);
-
 // Rest of the script
 
 
