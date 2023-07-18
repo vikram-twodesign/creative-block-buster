@@ -11,6 +11,11 @@ body .hide-initially {
     display: none;
 }
 
+a {
+    color: #666666; /* use any color you like */
+    text-decoration: none; /* removes the underline */
+}
+
 
 #date-time {
   color: #666666;
