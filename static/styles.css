@@ -129,8 +129,8 @@ textarea {
 
 #user-response-input {
     font-size: 16px;
-    color: #f1f1f1;
-    background-color: #111;
+    color: #333333;
+    background-color: #f1f1f1;
     width: 90%;
     border-radius: 16px;
     outline: none;
