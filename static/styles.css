@@ -13,7 +13,7 @@ body .hide-initially {
 
 
 #date-time {
-  color: #0f0;
+  color: #666666;
   position: absolute;
   top: 20px;
   left: 10px;
@@ -21,7 +21,7 @@ body .hide-initially {
 }
 
 footer {
-    color: #0f0;
+    color: #666666;
     position: fixed;
     bottom: 10px;
     left: 0;
@@ -111,8 +111,8 @@ h1 {
 textarea {
     width: 100%;
     padding: 8px 24px;
-    background-color: #222;
-    color: #0f0;
+    background-color: #f1f1f1;
+    color: #ffffff;
     border-radius: 16px;
     font-family: "calling-code", monospace;
     font-weight: 700;
@@ -142,7 +142,7 @@ textarea {
 
 
 textarea::placeholder {
-    color: #0f0;
+    color: #f1f1f1;
     opacity: 1;
 }
 
@@ -157,14 +157,14 @@ textarea::placeholder {
 
 #timer-progress-bar {
     height: 20px;
-    background-color: #44FF44; /* Green color */
+    background-color: #999999; /* Green color */
     width: 100%;
 }
 
 
 #copyToClipboard {
     display: none;
-    background-color: #0f0;
+    background-color: #f1f1f1;
     border: none;
     color: #333;
     padding: 10px 20px;
@@ -176,12 +176,12 @@ textarea::placeholder {
     cursor: pointer;
     transition-duration: 0.4s;
     border-radius: 12px;
-    box-shadow: 0px 0px 2px #0f0;
+    box-shadow: 0px 0px 2px #333333;
 }
 
 
 #copyToClipboard:hover {
-    background-color: #00b400;
+    background-color: #333333;
 }
 
 
