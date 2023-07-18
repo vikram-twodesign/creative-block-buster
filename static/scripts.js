@@ -18,6 +18,7 @@ const textLines = [
   "Hit the button and let the wordsmithing begin!",
 ];
 
+
 let lineIndex = 0;
 
 function showIntroText() {
