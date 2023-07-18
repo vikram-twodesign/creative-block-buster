@@ -1,10 +1,10 @@
 body {
     font-family: "calling-code", monospace;
     font-style: normal;
-    background-color: #000000;
-    color: #0f0;
+    background-color: #fafafa;
+    color: #333333;
     line-height: 1.6;
-    text-shadow: 0px 0px 2px #0f0;
+    text-shadow: none;
 }
 
 body .hide-initially {
@@ -88,8 +88,8 @@ h1 {
 
 .button {
     display: block;
-    background-color: #0f0;
-    color: #333;
+    background-color: #ff6347;
+    color: #ffffff;
     padding: 10px 20px;
     border: 0;
     cursor: pointer;
@@ -105,7 +105,7 @@ h1 {
 }
 
 .button:hover {
-    background-color: #00b400;
+    background-color: #ff4500;
 }
 
 textarea {
