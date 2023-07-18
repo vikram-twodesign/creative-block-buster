@@ -34,15 +34,16 @@ footer {
     .wrapper {
         display: flex;
         justify-content: space-between;
+        align-items: flex-start;
         gap: 20px; /* adjust this to change the space between the columns */
     }
 
     .left-column {
-        flex: 0 0 30%; /* this makes the left column take up 30% of the width */
+        flex: 0 0 35%; /* this makes the left column take up 30% of the width */
     }
 
     .right-column {
-        flex: 0 0 70%; /* this makes the right column take up 70% of the width */
+        flex: 0 0 65%; /* this makes the right column take up 70% of the width */
     }
 }
 
