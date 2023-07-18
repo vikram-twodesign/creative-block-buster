@@ -22,18 +22,16 @@ const textLines = [
 
 let lineIndex = 0;
 
-function typeWriter() {
-    if (lineIndex < textLines.length) {
-        introText.innerHTML += "<p>" + textLines[lineIndex] + "</p>";
-        lineIndex++;
-        setTimeout(typeWriter, 2500); // Add a delay of 2.5 seconds between each line
-    } else {
-        // When the intro text is finished, reveal the other elements
-        const hiddenElements = document.querySelectorAll('.hide-initially');
-        hiddenElements.forEach(element => {
-            element.classList.remove('hide-initially');
-        });
-    }
+function showIntroText() {
+    introText.innerHTML = textLines.map(line => "<p>" + line + "</p>").join('');
+    const hiddenElements = document.querySelectorAll('.hide-initially');
+    hiddenElements.forEach(element => {
+        element.classList.remove('hide-initially');
+    });
+}
+
+window.addEventListener('DOMContentLoaded', showIntroText);
+
 }
 
 
