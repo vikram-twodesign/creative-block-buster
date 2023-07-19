@@ -9,9 +9,7 @@ body {
     text-shadow: none;
 }
 
-body .hide-initially {
-    display: none;
-}
+
 
 a {
     color: #333333; /* use any color you like */
@@ -172,6 +170,7 @@ textarea::placeholder {
     background-color: #999999; 
     border-radius: 10px;
     width: 90%;
+    margin: 0 auto;
 }
 
 
