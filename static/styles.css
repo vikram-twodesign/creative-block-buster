@@ -135,8 +135,8 @@ h1 {
 
 .button {
     display: block;
-    background-color: #93babf;
-    color: #2F4F4F;
+    background-color: #627c80;
+    color: #F5FFFA;
     padding: 10px 20px;
     border: 0;
     cursor: pointer;
@@ -152,7 +152,7 @@ h1 {
 }
 
 .button:hover {
-    background-color: #666666;
+    background-color: #9dc6cc;
 }
 
 textarea {
