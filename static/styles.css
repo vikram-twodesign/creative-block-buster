@@ -5,7 +5,7 @@ body::before {
         background: rgba(255, 255, 255, 0.3); /* adjust the 0.3 to make the overlay more or less opaque */
         pointer-events: none; /* this allows clicks to pass through the overlay to the elements underneath */
     }
-    {
+body{
         font-family: "calling-code", monospace;
         font-style: normal;
         background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/fabric_1.png');
