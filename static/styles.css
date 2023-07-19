@@ -169,8 +169,7 @@ textarea::placeholder {
     background-color: #999999; 
     border-radius: 10px;
     width: 90%;
-    align-items: center;
-    text-align: center;
+    margin: auto;
 }
 
 
