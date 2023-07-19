@@ -2,7 +2,6 @@ body {
     font-family: "calling-code", monospace;
     font-style: normal;
     background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/fabric_1.png');
-    opacity: 0.8;
     background-color: #fafafa;
     color: #333333;
     line-height: 1.6;
@@ -170,7 +169,8 @@ textarea::placeholder {
     background-color: #999999; 
     border-radius: 10px;
     width: 90%;
-    margin: 0 auto;
+    align-items: center;
+    text-align: center;
 }
 
 
