@@ -190,7 +190,7 @@ textarea {
 
 textarea::placeholder {
     color: #2F4F4F;
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .success-message {
