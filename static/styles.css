@@ -48,6 +48,11 @@ body{
     }
 
 
+.hide-initially {
+    display: none;
+}
+
+
 a {
     color: #2F4F4F; /* use any color you like */
     text-decoration: none; /* removes the underline */
