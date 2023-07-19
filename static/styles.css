@@ -174,7 +174,7 @@ textarea {
 #user-response-input {
     font-size: 16px;
     color: #333333;
-    background-color: #B0E0E6;
+    background-color: #F5FFFA;
     width: 90%;
     border-radius: 16px;
     outline: none;
@@ -204,7 +204,7 @@ textarea::placeholder {
 
 #timer-progress-bar {
     height: 20px;
-    background-color: #999999; 
+    background-color: #93babf; 
     border-radius: 10px;
     width: 90%;
     margin-left: auto;
