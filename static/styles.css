@@ -1,6 +1,8 @@
 body {
     font-family: "calling-code", monospace;
     font-style: normal;
+    background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/fabric_1.png');
+    opacity: 0.8;
     background-color: #fafafa;
     color: #333333;
     line-height: 1.6;
@@ -168,7 +170,8 @@ textarea::placeholder {
 #timer-progress-bar {
     height: 20px;
     background-color: #999999; 
-    width: 100%;
+    border-radius: 10px;
+    width: 90%;
 }
 
 
