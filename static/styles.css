@@ -49,13 +49,13 @@ body{
 
 
 a {
-    color: #333333; /* use any color you like */
+    color: #2F4F4F; /* use any color you like */
     text-decoration: none; /* removes the underline */
 }
 
 
 #date-time {
-  color: #666666;
+  color: #2F4F4F;
   position: absolute;
   top: 20px;
   left: 10px;
@@ -135,8 +135,8 @@ h1 {
 
 .button {
     display: block;
-    background-color: #333333;
-    color: #ffffff;
+    background-color: #93babf;
+    color: #2F4F4F;
     padding: 10px 20px;
     border: 0;
     cursor: pointer;
@@ -173,7 +173,7 @@ textarea {
 
 #user-response-input {
     font-size: 16px;
-    color: #333333;
+    color: #2F4F4F;
     background-color: #F5FFFA;
     width: 90%;
     border-radius: 16px;
@@ -189,8 +189,8 @@ textarea {
 
 
 textarea::placeholder {
-    color: #666666;
-    opacity: 1;
+    color: #2F4F4F;
+    opacity: 0.8;
 }
 
 .success-message {
