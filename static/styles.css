@@ -219,9 +219,9 @@ textarea::placeholder {
 
 #copyToClipboard {
     display: none;
-    background-color: #f1f1f1;
+    background-color: #627c80;
     border: none;
-    color: #333;
+    color: #F5FFFA;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -236,7 +236,7 @@ textarea::placeholder {
 
 
 #copyToClipboard:hover {
-    background-color: #333333;
+    background-color: #9dc6cc;
 }
 
 
