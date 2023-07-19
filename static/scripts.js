@@ -176,7 +176,7 @@ function init() {
     sendDataToGoogleForm(currentPrompt, userResponseInput.value);
 
     // Here, we are removing the 'hide-initially' class to make the button visible
-    document.getElementById('copyToClipboard').classList.remove('hide-initially');
+    document.getElementById('copyToClipboard').style.display = 'block';
 });
 
 
