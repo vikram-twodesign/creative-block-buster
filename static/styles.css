@@ -22,7 +22,7 @@ body{
         height: 200%;
         top: -50%;
         left: -50%;
-        background: radial-gradient(circle at 50% 50%, #00b4d8, #caf0f8);
+        background: radial-gradient(circle at 50% 50%, #bbbbbb, #e6e6e6);
         border-radius: 50%;
         animation: blob 40s infinite linear;
         z-index: -1;
