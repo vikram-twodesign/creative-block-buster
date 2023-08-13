@@ -53,6 +53,15 @@ body{
 }
 
 
+.logo {
+    width: 200px; /* adjust as needed */
+    height: auto; /* maintain aspect ratio */
+    display: block; /* center the image if within a centered container */
+    margin: 0 auto; /* center the image */
+}
+
+
+
 a {
     color: #2F4F4F; /* use any color you like */
     text-decoration: none; /* removes the underline */
