@@ -54,7 +54,7 @@ body{
 
 
 .logo {
-    width: 200px; /* adjust as needed */
+    width: 400px; /* adjust as needed */
     height: auto; /* maintain aspect ratio */
     display: block; /* center the image if within a centered container */
     margin: 0 auto; /* center the image */
