@@ -81,8 +81,8 @@ footer {
 @media (min-width: 900px) {
     .wrapper {
         flex-direction: row;
-        .left-column { flex: 0 0 35%; }
-        .right-column { flex: 0 0 65%; }
+        .left-column { flex: 0 0 40%; }
+        .right-column { flex: 0 0 60%; }
     }
 }
 
