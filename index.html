@@ -1,4 +1,4 @@
-<!DOCTYPE html5>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,18 +9,15 @@
 </head>
 <body>
     <div class="blob" id="blob"></div>
-                       
+
     <div class="intro-container">
         <img src="CBB-Logo.svg" alt="Creative Block Buster" class="logo" />
         <p class="intro-text" id="intro-text"></p>
     </div>
 
-
     <div class="wrapper">
         <div class="left-column">
-            <div class="intro-container">
-                <div id="intro-text"></div>
-            </div>
+            <!-- Removed duplicate intro-container as it seemed to be unintentional -->
         </div>
 
         <div class="right-column">
@@ -34,11 +31,13 @@
                 <div id="timer-progress-bar" class="hide-initially"></div>
                 <div id="timer" class="timer hide-initially"></div>
                 <button id="copyToClipboard" class="button hide-initially">Copy My Micro-Masterpiece</button>
-
             </div>
         </div>
     </div>
     <script src="static/scripts.js"></script>
-    <footer>Made with ❤️ for Karanjeet.<br>    ©2023 <a href="https://www.twodesign.in/">TWO Design</a></footer>
+    <footer>
+        <p>Made with ❤️ for Karanjeet.</p>
+        <p>©2023 <a href="https://www.twodesign.in/">TWO Design</a></p>
+    </footer>
 </body>
 </html>
