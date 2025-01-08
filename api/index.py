@@ -22,12 +22,16 @@ app.logger.setLevel(logging.DEBUG)
 
 # Initialize OpenAI client with error handling
 api_key = os.getenv('OPENAI_API_KEY')
-if not api_key:
-    app.logger.error("OpenAI API key not found!")
-    raise ValueError("OpenAI API key not found in environment variables")
+client = None
 
-# Create OpenAI client as a global variable
-client = OpenAI(api_key=api_key)
+if api_key:
+    try:
+        client = OpenAI(api_key=api_key)
+        app.logger.info("OpenAI client initialized successfully")
+    except Exception as e:
+        app.logger.error(f"Error initializing OpenAI client: {str(e)}")
+else:
+    app.logger.error("OpenAI API key not found in environment variables")
 
 @app.route('/static/<path:path>')
 def serve_static(path):
@@ -53,8 +57,9 @@ def home():
 @app.route('/api/generate-prompt', methods=['GET'])
 def generate_prompt():
     try:
-        if not api_key:
-            raise ValueError("OpenAI API key not configured")
+        if not client:
+            app.logger.error("OpenAI client not initialized")
+            return jsonify({"error": "OpenAI API not configured. Please check your environment variables."}), 500
             
         app.logger.debug("Generating prompt with OpenAI API")
         response = client.chat.completions.create(
@@ -92,8 +97,9 @@ def generate_prompt():
 @app.route('/api/analyze-response', methods=['POST'])
 def analyze_response():
     try:
-        if not api_key:
-            raise ValueError("OpenAI API key not configured")
+        if not client:
+            app.logger.error("OpenAI client not initialized")
+            return jsonify({"error": "OpenAI API not configured. Please check your environment variables."}), 500
             
         data = request.get_json()
         if not data:
