@@ -1,10 +1,11 @@
 const { OpenAI } = require('openai');
+const config = require('./config');
 
 module.exports = async (req, res) => {
     try {
         // Initialize OpenAI client
         const client = new OpenAI({
-            apiKey: process.env.OPENAI_API_KEY
+            apiKey: config.openaiApiKey
         });
 
         // Make request to OpenAI API
