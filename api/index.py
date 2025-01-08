@@ -13,7 +13,14 @@ def get_openai_client():
     api_key = os.environ.get('OPENAI_API_KEY')
     if not api_key:
         return None
-    return OpenAI(api_key=api_key)
+    try:
+        return OpenAI(
+            api_key=api_key,
+            base_url="https://api.openai.com/v1"  # Explicitly set the base URL
+        )
+    except Exception as e:
+        print(f"Error creating OpenAI client: {str(e)}")
+        return None
 
 @app.route('/static/<path:path>')
 def serve_static(path):
