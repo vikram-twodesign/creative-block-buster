@@ -16,22 +16,32 @@ app = Flask(__name__,
 CORS(app)
 
 def get_openai_client():
-    api_key = os.environ.get('OPENAI_API_KEY')
+    # First try to get from environment
+    api_key = os.getenv('OPENAI_API_KEY')
+    
+    # Log environment variables for debugging (excluding sensitive data)
+    env_vars = {k: '[HIDDEN]' if 'KEY' in k else v for k, v in os.environ.items()}
+    logger.info(f"Environment variables: {env_vars}")
+    
     if not api_key:
         logger.error("OpenAI API key not found in environment variables")
         return None
+        
+    logger.info("API key found in environment variables")
+    
     try:
         client = OpenAI(
-            api_key=api_key,
-            base_url="https://api.openai.com/v1"
+            api_key=api_key
         )
-        # Test the client
+        
+        # Test the client with a simple API call
         logger.info("Testing OpenAI client connection...")
-        test_response = client.models.list()
-        logger.info("OpenAI client initialized successfully")
+        models = client.models.list()
+        logger.info("Successfully connected to OpenAI API")
+        
         return client
     except Exception as e:
-        logger.error(f"Error creating OpenAI client: {str(e)}")
+        logger.error(f"Error initializing OpenAI client: {str(e)}")
         return None
 
 @app.route('/static/<path:path>')
@@ -55,7 +65,7 @@ def generate_prompt():
     try:
         client = get_openai_client()
         if not client:
-            error_msg = "OpenAI API not configured correctly. Please check the server logs."
+            error_msg = "Failed to initialize OpenAI client. Check server logs for details."
             logger.error(error_msg)
             return jsonify({"error": error_msg}), 500
             
@@ -89,7 +99,7 @@ def generate_prompt():
         logger.info(f"Successfully generated prompt: {prompt}")
         return jsonify({"prompt": prompt})
     except Exception as e:
-        error_msg = f"Error generating prompt: {str(e)}"
+        error_msg = f"Error in generate_prompt: {str(e)}"
         logger.error(error_msg)
         return jsonify({"error": error_msg}), 500
 
@@ -98,18 +108,25 @@ def analyze_response():
     try:
         client = get_openai_client()
         if not client:
-            return jsonify({"error": "OpenAI API not configured. Please check your environment variables."}), 500
+            error_msg = "Failed to initialize OpenAI client. Check server logs for details."
+            logger.error(error_msg)
+            return jsonify({"error": error_msg}), 500
             
         data = request.get_json()
         if not data:
-            return jsonify({"error": "No JSON data received"}), 400
+            error_msg = "No JSON data received in request"
+            logger.error(error_msg)
+            return jsonify({"error": error_msg}), 400
             
         prompt = data.get('prompt')
         user_response = data.get('text')
         
         if not prompt or not user_response:
-            return jsonify({"error": "Missing prompt or text in request"}), 400
+            error_msg = "Missing required fields: prompt and text"
+            logger.error(error_msg)
+            return jsonify({"error": error_msg}), 400
         
+        logger.info("Making request to OpenAI API for analysis...")
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -136,6 +153,9 @@ def analyze_response():
         )
         
         feedback = response.choices[0].message.content.strip()
+        logger.info("Successfully generated feedback")
         return jsonify({"feedback": feedback})
     except Exception as e:
-        return jsonify({"error": str(e)}), 500 
+        error_msg = f"Error in analyze_response: {str(e)}"
+        logger.error(error_msg)
+        return jsonify({"error": error_msg}), 500 
