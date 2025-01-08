@@ -33,12 +33,6 @@ def get_openai_client():
         client = OpenAI(
             api_key=api_key
         )
-        
-        # Test the client with a simple API call
-        logger.info("Testing OpenAI client connection...")
-        models = client.models.list()
-        logger.info("Successfully connected to OpenAI API")
-        
         return client
     except Exception as e:
         logger.error(f"Error initializing OpenAI client: {str(e)}")
