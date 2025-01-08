@@ -9,7 +9,11 @@ import logging
 # Load environment variables from .env file
 load_dotenv()
 
-app = Flask(__name__, static_url_path='/static')
+# Initialize Flask app with static files configuration
+app = Flask(__name__, 
+    static_url_path='',  # This will serve static files from the root URL
+    static_folder='static'  # This points to the static folder
+)
 CORS(app)
 
 # Enable debug logging
@@ -28,7 +32,12 @@ except Exception as e:
 @app.route('/static/<path:path>')
 def serve_static(path):
     try:
-        return send_from_directory('static', path)
+        app.logger.debug(f"Serving static file: {path}")
+        if os.path.exists(os.path.join('static', path)):
+            return send_from_directory('static', path)
+        else:
+            app.logger.error(f"Static file not found: {path}")
+            return f"File not found: {path}", 404
     except Exception as e:
         app.logger.error(f"Error serving static file {path}: {str(e)}")
         return str(e), 404
