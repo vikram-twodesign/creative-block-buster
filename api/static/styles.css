@@ -5,7 +5,7 @@
     --accent-color: #5B9BD5;  /* Lighter blue */
     --background-color: #87CEEB;
     --text-color: #2F4F4F;
-    --white: #F5FFFA;
+    --white: #FFFFFF;  /* Pure white for text boxes */
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
     --spacing-xs: 0.5rem;
@@ -228,13 +228,14 @@ footer {
 
 /* Secondary Buttons (Copy & Share) */
 .secondary-button {
-    flex: 1;
-    max-width: 200px;
-    font-size: 0.9rem;
+    flex: 0 1 150px;  /* Reduced from 200px to 150px */
+    max-width: 150px;  /* Reduced from 200px to 150px */
+    font-size: 0.85rem;  /* Slightly smaller font */
     background-color: var(--white);
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
     box-shadow: var(--shadow);
+    padding: var(--spacing-xs) var(--spacing-sm);  /* Smaller padding */
 }
 
 .secondary-button:hover {
@@ -366,7 +367,8 @@ footer {
     border-radius: 15px;
     resize: vertical;
     transition: var(--transition);
-    background-color: var(--white);
+    background-color: #FFFFFF;  /* Force white background */
+    color: var(--text-color);
     box-sizing: border-box;
     max-width: 100%;
 }
@@ -375,6 +377,7 @@ footer {
     border-color: var(--secondary-color);
     box-shadow: 0 0 0 3px rgba(157, 198, 204, 0.3);
     outline: none;
+    background-color: #FFFFFF;  /* Maintain white background on focus */
 }
 
 .submit-button {
@@ -500,18 +503,18 @@ footer {
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
     :root {
-        --text-color: #e1e1e1;
-        --white: #2a2a2a;
-        --background-color: #1a1a1a;
+        --text-color: #2F4F4F;  /* Keep original dark color */
+        --white: #FFFFFF;  /* Keep white */
+        --background-color: #87CEEB;  /* Keep original background */
     }
 
     body {
         background-color: var(--background-color);
     }
 
-    .prompt-output, #user-response-input {
+    .prompt-output, #user-response-input, textarea {
         color: var(--text-color);
-        background-color: var(--white);
+        background-color: #FFFFFF !important;  /* Force white background */
     }
 }
 
