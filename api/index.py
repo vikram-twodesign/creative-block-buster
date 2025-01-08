@@ -6,9 +6,6 @@ from dotenv import load_dotenv
 import sys
 import logging
 
-# Load environment variables from .env file
-load_dotenv()
-
 # Initialize Flask app with static files configuration
 app = Flask(__name__, 
     static_url_path='',  # This will serve static files from the root URL
@@ -21,17 +18,25 @@ app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.DEBUG)
 
 # Initialize OpenAI client with error handling
-api_key = os.getenv('OPENAI_API_KEY')
-client = None
-
-if api_key:
-    try:
+try:
+    # Try to get API key from environment variable
+    api_key = os.environ.get('OPENAI_API_KEY')
+    
+    # If not found, try loading from .env file as fallback
+    if not api_key:
+        load_dotenv()
+        api_key = os.getenv('OPENAI_API_KEY')
+    
+    if not api_key:
+        app.logger.error("OpenAI API key not found in environment variables or .env file")
+        client = None
+    else:
+        app.logger.info("OpenAI API key found")
         client = OpenAI(api_key=api_key)
         app.logger.info("OpenAI client initialized successfully")
-    except Exception as e:
-        app.logger.error(f"Error initializing OpenAI client: {str(e)}")
-else:
-    app.logger.error("OpenAI API key not found in environment variables")
+except Exception as e:
+    app.logger.error(f"Error initializing OpenAI client: {str(e)}")
+    client = None
 
 @app.route('/static/<path:path>')
 def serve_static(path):
@@ -58,8 +63,9 @@ def home():
 def generate_prompt():
     try:
         if not client:
-            app.logger.error("OpenAI client not initialized")
-            return jsonify({"error": "OpenAI API not configured. Please check your environment variables."}), 500
+            error_msg = "OpenAI API not configured. Please check your environment variables."
+            app.logger.error(error_msg)
+            return jsonify({"error": error_msg}), 500
             
         app.logger.debug("Generating prompt with OpenAI API")
         response = client.chat.completions.create(
@@ -91,15 +97,17 @@ def generate_prompt():
         app.logger.debug(f"Generated prompt: {prompt}")
         return jsonify({"prompt": prompt})
     except Exception as e:
-        app.logger.error(f"Error generating prompt: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        error_msg = f"Error generating prompt: {str(e)}"
+        app.logger.error(error_msg)
+        return jsonify({"error": error_msg}), 500
 
 @app.route('/api/analyze-response', methods=['POST'])
 def analyze_response():
     try:
         if not client:
-            app.logger.error("OpenAI client not initialized")
-            return jsonify({"error": "OpenAI API not configured. Please check your environment variables."}), 500
+            error_msg = "OpenAI API not configured. Please check your environment variables."
+            app.logger.error(error_msg)
+            return jsonify({"error": error_msg}), 500
             
         data = request.get_json()
         if not data:
@@ -141,5 +149,6 @@ def analyze_response():
         app.logger.debug(f"Generated feedback: {feedback}")
         return jsonify({"feedback": feedback})
     except Exception as e:
-        app.logger.error(f"Error analyzing response: {str(e)}")
-        return jsonify({"error": str(e)}), 500 
+        error_msg = f"Error analyzing response: {str(e)}"
+        app.logger.error(error_msg)
+        return jsonify({"error": error_msg}), 500 
