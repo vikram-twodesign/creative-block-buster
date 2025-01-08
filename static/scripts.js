@@ -6,20 +6,15 @@ const userResponseInput = document.querySelector('#user-response-input');
 const successMessageDisplay = document.querySelector('#success-message');
 const timerDisplay = document.querySelector('#timer');
 
-const proxyUrl = 'https://creative-block-buster.vercel.app/api/submit-form';
-
 let timerInterval;
 let submittedText = '';
 
 const textLines = [
-  "Welcome to the Creative Block Buster!", 
-  "Our prompts are designed to help you blast through writer's block and ignite your creativity.",
-  "Just 5 minutes is all it takes to get your creative juices flowing.",
-  "Hit the button and let the wordsmithing begin!",
+    "Welcome to the Creative Block Buster!", 
+    "Our prompts are designed to help you blast through writer's block and ignite your creativity.",
+    "Just 5 minutes is all it takes to get your creative juices flowing.",
+    "Hit the button and let the wordsmithing begin!",
 ];
-
-
-let lineIndex = 0;
 
 function showIntroText() {
     introText.innerHTML = textLines.map(line => "<p>" + line + "</p>").join('');
@@ -31,12 +26,10 @@ function showIntroText() {
 
 window.addEventListener('DOMContentLoaded', showIntroText);
 
-// Rest of the script
-
-
 async function generatePrompt() {
+    generatePromptBtn.classList.add('loading');
     try {
-        const response = await fetch('https://creative-block-buster.vercel.app/api/generate-prompt');
+        const response = await fetch('/api/generate-prompt');
         const data = await response.json();
         
         if (data.error) {
@@ -48,6 +41,8 @@ async function generatePrompt() {
     } catch (error) {
         console.error('Error:', error);
         return 'Sorry, there was an error generating your prompt. Please try again.';
+    } finally {
+        generatePromptBtn.classList.remove('loading');
     }
 }
 
@@ -56,6 +51,15 @@ function init() {
         console.error('One or more required elements are missing.');
         return;
     }
+
+    // Add input animations
+    userResponseInput.addEventListener('focus', () => {
+        userResponseInput.style.transform = 'scale(1.01)';
+    });
+
+    userResponseInput.addEventListener('blur', () => {
+        userResponseInput.style.transform = 'scale(1)';
+    });
 
     generatePromptBtn.addEventListener('click', async () => {
         promptOutput.textContent = 'Generating your prompt...';
@@ -66,12 +70,14 @@ function init() {
 
         const promptText = await generatePrompt();
         promptOutput.textContent = '';
+        promptOutput.style.opacity = '0';
 
         // Animation for prompt text
         let i = 0;
         const speed = 50;
         function typeWriter() {
             if (i < promptText.length) {
+                if (i === 0) promptOutput.style.opacity = '1';
                 promptOutput.textContent += promptText.charAt(i);
                 i++;
                 setTimeout(typeWriter, speed);
@@ -81,16 +87,26 @@ function init() {
     });
 
     submitResponseBtn.addEventListener('click', async () => {
+        if (!userResponseInput.value.trim()) {
+            userResponseInput.classList.add('shake');
+            setTimeout(() => userResponseInput.classList.remove('shake'), 500);
+            return;
+        }
+
+        submitResponseBtn.classList.add('loading');
         clearInterval(timerInterval);
         submittedText = userResponseInput.value;
         const currentPrompt = promptOutput.textContent;
         
-        // Show loading message
-        successMessageDisplay.textContent = 'Analyzing your masterpiece...';
-        successMessageDisplay.style.display = 'block';
+        // Show loading state
+        const feedbackContent = document.getElementById('feedback-content');
+        console.log('Feedback content element:', feedbackContent);
+        console.log('Success message element:', successMessageDisplay);
+        
+        feedbackContent.textContent = 'Analyzing your creative masterpiece...';
+        successMessageDisplay.style.display = 'block';  // Force display block
         
         try {
-            // Get AI feedback
             const response = await fetch('/api/analyze-response', {
                 method: 'POST',
                 headers: {
@@ -103,208 +119,84 @@ function init() {
             });
             
             const data = await response.json();
+            console.log('Response data:', data);
             
             if (data.error) {
-                successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
+                feedbackContent.textContent = 'Great job! Look at you, such a natural!';
             } else {
-                successMessageDisplay.textContent = data.feedback;
+                feedbackContent.textContent = data.feedback;
             }
             
-            // If there's text, send to Google Form
-            if (submittedText.trim()) {
-                sendDataToGoogleForm(currentPrompt, submittedText);
-            }
-            
-            document.getElementById('copyToClipboard').style.display = 'block';
+            // Show action buttons
+            const copyBtn = document.getElementById('copyToClipboard');
+            const shareBtn = document.getElementById('shareImage');
+            copyBtn.style.display = 'block';
+            shareBtn.style.display = 'block';
             
         } catch (error) {
             console.error('Error:', error);
-            successMessageDisplay.textContent = 'Great job! Look at you, such a natural!';
+            feedbackContent.textContent = 'Great job! Look at you, such a natural!';
+        } finally {
+            submitResponseBtn.classList.remove('loading');
         }
     });
-
 
     function startTimer(duration, display) {
         clearInterval(timerInterval);
         let timeRemaining = duration;
-        tick(display, timeRemaining);
+        
+        // Get the timer progress circle
+        const timerProgress = document.querySelector('.timer-progress');
+        const circumference = 2 * Math.PI * parseFloat(timerProgress.getAttribute('r'));
+        timerProgress.style.strokeDasharray = circumference;
+        
+        // Initial state
+        tick(display, timeRemaining, circumference, duration);
+        
         timerInterval = setInterval(() => {
             timeRemaining -= 1;
-            tick(display, timeRemaining);
+            tick(display, timeRemaining, circumference, duration);
             if (timeRemaining <= 0) {
                 clearInterval(timerInterval);
-                display.textContent = "Your time's up!";
+                display.textContent = "Time's up!";
+                timerProgress.style.strokeDashoffset = circumference; // Empty circle
             }
         }, 1000);
     }
 
-    function tick(display, timeRemaining) {
+    function tick(display, timeRemaining, circumference, duration) {
         const minutes = parseInt(timeRemaining / 60, 10);
         const seconds = parseInt(timeRemaining % 60, 10);
         const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
         const formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
         display.textContent = formattedMinutes + ':' + formattedSeconds;
         
-    // Update the progress bar
-        const progressBar = document.getElementById('timer-progress-bar');
-        const progressPercentage = (timeRemaining / 300) * 100; // Adjust 300 to your timer's duration
-        progressBar.style.width = progressPercentage + '%';
+        // Update the circular progress
+        const timerProgress = document.querySelector('.timer-progress');
+        const progressPercentage = timeRemaining / duration;
+        const dashoffset = circumference * (1 - progressPercentage);
+        timerProgress.style.strokeDashoffset = dashoffset;
     }
 
-    function sendDataToGoogleForm(prompt, response) {
-        const url = '/api/submitForm';
-        
-        return fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                text: response,
-                prompt: prompt
-            })
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`${response.status}: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then((data) => {
-            console.log("Data:", data);
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
-    }
-
-    document.getElementById("user-response-input").addEventListener("input", function () {
-        const inputText = this.value;
-        const characterCount = inputText.length;
-        document.getElementById("character-count").innerHTML = "Characters: " + characterCount;
+    // Character counter
+    userResponseInput.addEventListener('input', function() {
+        const characterCount = this.value.length;
+        document.getElementById('character-count').innerHTML = 'Characters: ' + characterCount;
     });
-
-    // Add share button listener only if element exists
-    const shareButton = document.getElementById('shareImage');
-    if (shareButton) {
-        shareButton.addEventListener('click', generateShareImage);
-    }
 }
 
 init();
 
-
+// Copy to clipboard functionality
 document.getElementById('copyToClipboard').addEventListener('click', () => {
-    navigator.clipboard.writeText(submittedText).then(() => {
-        console.log('Text copied to clipboard');
-    }).catch((error) => {
-        console.error('Error copying text:', error);
-    });
-});
-
-async function generateShareImage() {
-    const lightbox = document.createElement('div');
-    lightbox.className = 'lightbox';
-    
-    // Create container for share card
-    const container = document.createElement('div');
-    container.className = 'share-card-container';
-    
-    const template = document.getElementById('share-image-template');
-    template.querySelector('.share-prompt').textContent = promptOutput.textContent;
-    template.querySelector('.share-response').textContent = submittedText;
-    
-    const templateClone = template.cloneNode(true);
-    templateClone.style.display = 'block';
-    
-    const closeButton = document.createElement('button');
-    closeButton.className = 'close-lightbox';
-    closeButton.innerHTML = '×';
-    closeButton.onclick = () => lightbox.remove();
-    
-    const shareButtons = document.createElement('div');
-    shareButtons.className = 'share-buttons';
-    
-    // Wait for assets to load
-    setTimeout(async () => {
-        try {
-            const card = templateClone.querySelector('.share-card');
-            
-            // Set specific dimensions for capture
-            const captureWidth = 1200; // Doubled for better quality
-            const captureHeight = 1200;
-            
-            const canvas = await html2canvas(card, {
-                scale: 2, // Increased scale for better quality
-                width: captureWidth / 2,
-                height: captureHeight / 2,
-                backgroundColor: null,
-                logging: true,
-                onclone: function(clonedDoc) {
-                    const clonedCard = clonedDoc.querySelector('.share-card');
-                    // Ensure consistent styling for capture
-                    clonedCard.style.width = `${captureWidth/2}px`;
-                    clonedCard.style.height = `${captureHeight/2}px`;
-                    
-                    // Force logo loading
-                    const logos = clonedDoc.getElementsByClassName('share-logo');
-                    Array.from(logos).forEach(logo => {
-                        logo.src = logo.src;
-                    });
-                }
-            });
-            
-            const image = canvas.toDataURL('image/png', 1.0); // Maximum quality
-            
-            // Update share buttons
-            shareButtons.innerHTML = `
-                <button class="share-button" id="downloadImage">
-                    <i class="fas fa-download"></i> Download
-                </button>
-                <button class="share-button" id="twitterShare">
-                    <i class="fab fa-twitter"></i> Twitter
-                </button>
-                <button class="share-button" id="facebookShare">
-                    <i class="fab fa-facebook"></i> Facebook
-                </button>
-            `;
-            
-            // Add click handlers
-            shareButtons.querySelector('#downloadImage').onclick = () => {
-                const link = document.createElement('a');
-                link.download = 'my-micro-masterpiece.png';
-                link.href = image;
-                link.click();
-            };
-            
-            // ... rest of the share button handlers ...
-            
-        } catch (error) {
-            console.error('Error generating image:', error);
-        }
-    }, 500);
-    
-    // Add everything to container
-    container.appendChild(templateClone);
-    container.appendChild(shareButtons);
-    
-    // Add container and close button to lightbox
-    lightbox.appendChild(closeButton);
-    lightbox.appendChild(container);
-    
-    // Add lightbox to page
-    document.body.appendChild(lightbox);
-    setTimeout(() => lightbox.classList.add('active'), 10);
-}
-
-// Update the submit button event listener to include image generation
-submitResponseBtn.addEventListener('click', async () => {
-    // ... existing submit button code ...
-    
-    // After successful submission, show the share image button
-    document.getElementById('shareImage').style.display = 'block';
-});
-
-// Add click handler for share image button
-document.getElementById('shareImage').addEventListener('click', generateShareImage);
-
+    navigator.clipboard.writeText(submittedText)
+        .then(() => {
+            const button = document.getElementById('copyToClipboard');
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i><span>Copied!</span>';
+            setTimeout(() => {
+                button.innerHTML = originalText;
+            }, 2000);
+        })
+        .catch(error => console.error('Error copying text:', error));
+}); 
