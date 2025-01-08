@@ -2,39 +2,110 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative Block Buster</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Creative Block Buster - Break through writer's block with AI-powered writing prompts">
+    <meta name="theme-color" content="#87CEEB">
+    <meta property="og:title" content="Creative Block Buster">
+    <meta property="og:description" content="Break through writer's block with AI-powered writing prompts">
+    <meta property="og:type" content="website">
+    <title>CREATIVE BLOCK BUSTER - AI Writing Prompts</title>
+    <link rel="stylesheet" href="https://use.typekit.net/oqm8rib.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <div class="wrapper">
-        <div class="container">
-            <img src="{{ url_for('static', filename='CBB-Logo.svg') }}" alt="Creative Block Buster Logo" class="logo" />
-            
-            <div class="prompt-section">
-                <button id="generatePromptBtn" class="button primary-button">Bust my Block</button>
-                <div class="prompt-output" id="promptOutput">
-                    <div class="timer" id="timer">5:00</div>
-                    Your writing prompt will appear here...
+    <div class="blob" id="blob" aria-hidden="true"></div>
+    <header>
+        <img src="{{ url_for('static', filename='CBB-Logo.svg') }}" alt="Creative Block Buster Logo" class="logo" />
+    </header>
+    
+    <main class="wrapper">
+        <div class="left-column">
+            <div class="intro-container" role="complementary">
+                <p class="intro-text" id="intro-text"></p>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="container">
+                <div class="prompt-section">
+                    <button id="generate-prompt-btn" class="button primary-button hide-initially" aria-label="Generate new writing prompt">
+                        <i class="fas fa-magic" aria-hidden="true"></i>
+                        <span>Bust My Block</span>
+                    </button>
+                    
+                    <div id="prompt-output" class="prompt-output hide-initially" role="status" aria-live="polite"></div>
+                    
+                    <div class="timer-container hide-initially">
+                        <div class="timer-wrapper">
+                            <div class="timer-circle">
+                                <svg class="timer-svg">
+                                    <circle class="timer-background" cx="50%" cy="50%" r="45%"></circle>
+                                    <circle class="timer-progress" cx="50%" cy="50%" r="45%"></circle>
+                                </svg>
+                                <div id="timer" class="timer" role="timer" aria-live="polite">05:00</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="writing-section">
-                <label for="user-response-input">Time to unleash your creativity! ✨</label>
-                <textarea id="user-response-input" placeholder="Let your imagination run wild..."></textarea>
-                <button id="submitResponseBtn" class="button submit-button">Submit my Micro-Masterpiece</button>
-            </div>
+                <div class="writing-section hide-initially">
+                    <label for="user-response-input" class="section-label">Time to unleash your creativity! ✨</label>
+                    <textarea 
+                        id="user-response-input" 
+                        rows="6" 
+                        placeholder="Let your imagination run wild..."
+                        aria-label="Your writing response"
+                    ></textarea>
+                    <p id="character-count" aria-live="polite">Characters: 0</p>
+                </div>
 
-            <div id="success-message" class="success-message" style="display: none;">
-                <h3>✨ Your Creative Genius Analysis ✨</h3>
-                <div id="feedback-content"></div>
-                <div class="button-group">
-                    <button id="copyResponseBtn" class="button">Copy Response</button>
-                    <button id="shareImageBtn" class="button">Share Image</button>
+                <button id="submit-response-btn" class="button submit-button hide-initially">
+                    <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                    <span>Submit My Micro-Masterpiece</span>
+                </button>
+                
+                <div id="success-message" class="success-message" role="status" aria-live="polite">
+                    <h3>✨ Your Creative Genius Analysis ✨</h3>
+                    <div id="feedback-content"></div>
+                </div>
+                
+                <div class="action-buttons hide-initially">
+                    <button id="copyToClipboard" class="button secondary-button" aria-label="Copy response to clipboard">
+                        <i class="fas fa-copy" aria-hidden="true"></i>
+                        <span>Copy Response</span>
+                    </button>
+                    
+                    <button id="shareImage" class="button secondary-button" aria-label="Share as image">
+                        <i class="fas fa-share-alt" aria-hidden="true"></i>
+                        <span>Share Image</span>
+                    </button>
+                </div>
+                
+                <div id="share-image-template" style="display: none;">
+                    <div class="share-card">
+                        <img src="{{ url_for('static', filename='CBB-Logo.svg') }}" alt="" class="share-logo" />
+                        <div class="share-content">
+                            <h3 class="share-prompt"></h3>
+                            <p class="share-response"></p>
+                        </div>
+                        <div class="share-footer">
+                            <p class="main-text">Created on Creative Block Buster</p>
+                            <p class="cta-text">Create your own micro-masterpiece at creativeblockbuster.com</p>
+                        </div>
+                        <img src="{{ url_for('static', filename='CBB-Logo.svg') }}" alt="" class="watermark-logo" aria-hidden="true" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    </main>
+    
+    <footer>
+        <p>Made with <span aria-label="love">❤️</span> for Karanjeet.</p>
+        <p>©2023 <a href="https://www.twodesign.in/" target="_blank" rel="noopener noreferrer">TWO Design</a></p>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
 </body>
 </html>
