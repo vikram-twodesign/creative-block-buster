@@ -1,15 +1,13 @@
 {
-  "name": "blockbuster-update",
+  "name": "creative-block-buster",
   "version": "1.0.0",
-  "description": "A tiny tool to help creative professionals bust their creative block.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "A creative writing prompt generator and analyzer",
+  "main": "api/index.js",
   "dependencies": {
-    "node-fetch": "^2.6.7"
+    "openai": "^4.0.0",
+    "node-fetch": "^2.6.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
