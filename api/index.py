@@ -2,24 +2,36 @@ from flask import Flask, render_template, jsonify, request, send_from_directory
 from flask_cors import CORS
 from openai import OpenAI
 import os
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__, 
     static_url_path='',
-    static_folder='static'
+    static_folder='static',
+    template_folder='templates'  # Explicitly set template folder
 )
 CORS(app)
 
 def get_openai_client():
     api_key = os.environ.get('OPENAI_API_KEY')
     if not api_key:
+        logger.error("OpenAI API key not found in environment variables")
         return None
     try:
-        return OpenAI(
+        client = OpenAI(
             api_key=api_key,
-            base_url="https://api.openai.com/v1"  # Explicitly set the base URL
+            base_url="https://api.openai.com/v1"
         )
+        # Test the client
+        logger.info("Testing OpenAI client connection...")
+        test_response = client.models.list()
+        logger.info("OpenAI client initialized successfully")
+        return client
     except Exception as e:
-        print(f"Error creating OpenAI client: {str(e)}")
+        logger.error(f"Error creating OpenAI client: {str(e)}")
         return None
 
 @app.route('/static/<path:path>')
@@ -43,8 +55,11 @@ def generate_prompt():
     try:
         client = get_openai_client()
         if not client:
-            return jsonify({"error": "OpenAI API not configured. Please check your environment variables."}), 500
+            error_msg = "OpenAI API not configured correctly. Please check the server logs."
+            logger.error(error_msg)
+            return jsonify({"error": error_msg}), 500
             
+        logger.info("Making request to OpenAI API...")
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -71,9 +86,12 @@ def generate_prompt():
         )
         
         prompt = response.choices[0].message.content.strip()
+        logger.info(f"Successfully generated prompt: {prompt}")
         return jsonify({"prompt": prompt})
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        error_msg = f"Error generating prompt: {str(e)}"
+        logger.error(error_msg)
+        return jsonify({"error": error_msg}), 500
 
 @app.route('/api/analyze-response', methods=['POST'])
 def analyze_response():
