@@ -13,9 +13,8 @@ CORS(app)
 # Initialize OpenAI client
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
+@app.route('/')
+def home():
     return render_template('index.html')
 
 @app.route('/api/generate-prompt', methods=['GET'])
@@ -88,6 +87,4 @@ def analyze_response():
         return jsonify({"feedback": feedback})
     except Exception as e:
         print(f"Error analyzing response: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-
-app = app.wsgi_app 
+        return jsonify({"error": str(e)}), 500 
