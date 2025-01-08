@@ -24,10 +24,10 @@ app.logger.setLevel(logging.DEBUG)
 api_key = os.getenv('OPENAI_API_KEY')
 if not api_key:
     app.logger.error("OpenAI API key not found!")
-try:
-    client = OpenAI(api_key=api_key)
-except Exception as e:
-    app.logger.error(f"Error initializing OpenAI client: {str(e)}")
+    raise ValueError("OpenAI API key not found in environment variables")
+
+# Create OpenAI client as a global variable
+client = OpenAI(api_key=api_key)
 
 @app.route('/static/<path:path>')
 def serve_static(path):
@@ -56,6 +56,7 @@ def generate_prompt():
         if not api_key:
             raise ValueError("OpenAI API key not configured")
             
+        app.logger.debug("Generating prompt with OpenAI API")
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -82,6 +83,7 @@ def generate_prompt():
         )
         
         prompt = response.choices[0].message.content.strip()
+        app.logger.debug(f"Generated prompt: {prompt}")
         return jsonify({"prompt": prompt})
     except Exception as e:
         app.logger.error(f"Error generating prompt: {str(e)}")
@@ -103,6 +105,7 @@ def analyze_response():
         if not prompt or not user_response:
             raise ValueError("Missing prompt or text in request")
         
+        app.logger.debug("Analyzing response with OpenAI API")
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -129,6 +132,7 @@ def analyze_response():
         )
         
         feedback = response.choices[0].message.content.strip()
+        app.logger.debug(f"Generated feedback: {feedback}")
         return jsonify({"feedback": feedback})
     except Exception as e:
         app.logger.error(f"Error analyzing response: {str(e)}")
