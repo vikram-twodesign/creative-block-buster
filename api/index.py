@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 import sys
 import logging
+import json
 
 # Initialize Flask app with static files configuration
 app = Flask(__name__, 
@@ -14,29 +15,97 @@ app = Flask(__name__,
 CORS(app)
 
 # Enable debug logging
-app.logger.addHandler(logging.StreamHandler(sys.stdout))
+handler = logging.StreamHandler(sys.stdout)
+handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+app.logger.addHandler(handler)
 app.logger.setLevel(logging.DEBUG)
 
 # Initialize OpenAI client with error handling
-try:
-    # Try to get API key from environment variable
-    api_key = os.environ.get('OPENAI_API_KEY')
-    
-    # If not found, try loading from .env file as fallback
-    if not api_key:
-        load_dotenv()
-        api_key = os.getenv('OPENAI_API_KEY')
-    
-    if not api_key:
-        app.logger.error("OpenAI API key not found in environment variables or .env file")
-        client = None
-    else:
-        app.logger.info("OpenAI API key found")
+def init_openai_client():
+    try:
+        # Log all environment variables (excluding the actual API key value)
+        env_vars = {k: '***' if 'key' in k.lower() else v for k, v in os.environ.items()}
+        app.logger.debug(f"Environment variables: {json.dumps(env_vars, indent=2)}")
+        
+        # Try different methods to get the API key
+        api_key = None
+        
+        # Method 1: Direct environment variable
+        api_key = os.environ.get('OPENAI_API_KEY')
+        if api_key:
+            app.logger.info("API key found in os.environ")
+        
+        # Method 2: Environment file
+        if not api_key:
+            app.logger.debug("Trying to load API key from .env file")
+            load_dotenv()
+            api_key = os.getenv('OPENAI_API_KEY')
+            if api_key:
+                app.logger.info("API key found in .env file")
+        
+        # Method 3: Vercel environment
+        if not api_key:
+            app.logger.debug("Trying to load API key from VERCEL_ENV")
+            vercel_env = os.environ.get('VERCEL_ENV')
+            app.logger.debug(f"VERCEL_ENV: {vercel_env}")
+            
+            if vercel_env:
+                api_key = os.environ.get('OPENAI_API_KEY')
+                if api_key:
+                    app.logger.info("API key found in Vercel environment")
+        
+        if not api_key:
+            app.logger.error("No API key found in any location")
+            return None
+        
+        # Try to initialize the client
+        app.logger.debug("Attempting to initialize OpenAI client")
         client = OpenAI(api_key=api_key)
-        app.logger.info("OpenAI client initialized successfully")
-except Exception as e:
-    app.logger.error(f"Error initializing OpenAI client: {str(e)}")
-    client = None
+        
+        # Test the client with a simple completion
+        app.logger.debug("Testing OpenAI client with a simple request")
+        test_response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": "test"}],
+            max_tokens=5
+        )
+        app.logger.info("OpenAI client initialized and tested successfully")
+        return client
+        
+    except Exception as e:
+        app.logger.error(f"Error initializing OpenAI client: {str(e)}")
+        return None
+
+# Initialize the client
+client = init_openai_client()
+
+@app.route('/api/test-openai', methods=['GET'])
+def test_openai():
+    """Test endpoint to check OpenAI configuration"""
+    try:
+        if not client:
+            return jsonify({
+                "status": "error",
+                "message": "OpenAI client not initialized",
+                "env_vars": {k: '***' if 'key' in k.lower() else v for k, v in os.environ.items()}
+            }), 500
+            
+        test_response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": "test"}],
+            max_tokens=5
+        )
+        return jsonify({
+            "status": "success",
+            "message": "OpenAI client working",
+            "test_response": str(test_response)
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e),
+            "env_vars": {k: '***' if 'key' in k.lower() else v for k, v in os.environ.items()}
+        }), 500
 
 @app.route('/static/<path:path>')
 def serve_static(path):
