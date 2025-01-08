@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, send_from_directory
 from flask_cors import CORS
 from openai import OpenAI
 import os
@@ -9,7 +9,7 @@ import logging
 # Load environment variables from .env file
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 CORS(app)
 
 # Enable debug logging
@@ -24,6 +24,14 @@ try:
     client = OpenAI(api_key=api_key)
 except Exception as e:
     app.logger.error(f"Error initializing OpenAI client: {str(e)}")
+
+@app.route('/static/<path:path>')
+def serve_static(path):
+    try:
+        return send_from_directory('static', path)
+    except Exception as e:
+        app.logger.error(f"Error serving static file {path}: {str(e)}")
+        return str(e), 404
 
 @app.route('/')
 def home():
