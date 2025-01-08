@@ -3,6 +3,8 @@ from flask_cors import CORS
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+import sys
+import logging
 
 # Load environment variables from .env file
 load_dotenv()
@@ -10,16 +12,33 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-# Initialize OpenAI client
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+# Enable debug logging
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.DEBUG)
+
+# Initialize OpenAI client with error handling
+api_key = os.getenv('OPENAI_API_KEY')
+if not api_key:
+    app.logger.error("OpenAI API key not found!")
+try:
+    client = OpenAI(api_key=api_key)
+except Exception as e:
+    app.logger.error(f"Error initializing OpenAI client: {str(e)}")
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        app.logger.error(f"Error rendering template: {str(e)}")
+        return str(e), 500
 
 @app.route('/api/generate-prompt', methods=['GET'])
 def generate_prompt():
     try:
+        if not api_key:
+            raise ValueError("OpenAI API key not configured")
+            
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -48,15 +67,24 @@ def generate_prompt():
         prompt = response.choices[0].message.content.strip()
         return jsonify({"prompt": prompt})
     except Exception as e:
-        print(f"Error generating prompt: {str(e)}")
+        app.logger.error(f"Error generating prompt: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/analyze-response', methods=['POST'])
 def analyze_response():
     try:
+        if not api_key:
+            raise ValueError("OpenAI API key not configured")
+            
         data = request.get_json()
+        if not data:
+            raise ValueError("No JSON data received")
+            
         prompt = data.get('prompt')
         user_response = data.get('text')
+        
+        if not prompt or not user_response:
+            raise ValueError("Missing prompt or text in request")
         
         response = client.chat.completions.create(
             model="gpt-4o-mini",
@@ -86,5 +114,5 @@ def analyze_response():
         feedback = response.choices[0].message.content.strip()
         return jsonify({"feedback": feedback})
     except Exception as e:
-        print(f"Error analyzing response: {str(e)}")
+        app.logger.error(f"Error analyzing response: {str(e)}")
         return jsonify({"error": str(e)}), 500 
